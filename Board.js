@@ -115,21 +115,76 @@
       },false,this);
     },
 
+    getMajorDiagonal: function(majorDiagonalColumnIndexAtFirstRow){
+      var matrix = this.rows();
+      var count = majorDiagonalColumnIndexAtFirstRow;
+      var resultDiagonal = [];
+       _.each(matrix, function(row){
+        resultDiagonal.push(row[count]);
+        count++;
+      });
+       return resultDiagonal;
+    },
+
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
-      debugger;
-      return false; // fixme
+      var diagonal = this.getMajorDiagonal(majorDiagonalColumnIndexAtFirstRow);
+      var result;
+      var counter = 0;
+      _.each(diagonal, function(value){
+        if(value == 1){
+          counter++;
+        }
+        if(counter > 1){
+          result = true;
+        } else{
+          result = false;
+        }
+      });
+      return result;
     },
 
     hasAnyMajorDiagonalConflicts: function(){
-      return false; // fixme
+      var allDiagonals =_.range(this.get("n"));
+      return _.reduce(allDiagonals, function(memo, diagonal){
+        memo = memo || this.hasMajorDiagonalConflictAt(diagonal);
+        return memo;
+      },false,this);
+    },
+
+    getMinorDiagonal: function(minorDiagonalColumnIndexAtFirstRow){
+      var matrix = this.rows();
+      var count = minorDiagonalColumnIndexAtFirstRow;
+      var resultDiagonal = [];
+       _.each(matrix, function(row){
+        resultDiagonal.push(row[count]);
+        count--;
+      });
+       return resultDiagonal;
     },
 
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      var diagonal = this.getMinorDiagonal(minorDiagonalColumnIndexAtFirstRow);
+      var result;
+      var counter = 0;
+      _.each(diagonal, function(value){
+        if(value == 1){
+          counter++;
+        }
+        if(counter > 1){
+          result = true;
+        } else{
+          result = false;
+        }
+      });
+      return result;
     },
 
     hasAnyMinorDiagonalConflicts: function(){
-      return false; // fixme
+      var allDiagonals =_.range(this.get("n"));
+      return _.reduce(allDiagonals, function(memo, diagonal){
+        memo = memo || this.hasMinorDiagonalConflictAt(diagonal);
+        return memo;
+      },false,this);
     }
 
   });
