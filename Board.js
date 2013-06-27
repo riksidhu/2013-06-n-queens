@@ -58,11 +58,28 @@
     // todo: fill in all these functions - they'll help you!
 
     hasRowConflictAt: function(rowIndex){
-      return false; // fixme
+      var row = this.get(rowIndex);
+      var result;
+      var counter = 0;
+      _.each(row, function(value){
+        if(value == 1){
+          counter++;
+        }
+        if(counter > 1){
+          result = true;
+        } else{
+          result = false;
+        }
+      });
+      return result;
     },
 
     hasAnyRowConflicts: function(){
-      return false; // fixme
+      var totalRows =_.range(this.get("n"));
+      return _.reduce(totalRows, function(memo, row){
+        memo = memo || this.hasRowConflictAt(row);
+        return memo;
+      },false,this);
     },
 
     hasColConflictAt: function(colIndex){
