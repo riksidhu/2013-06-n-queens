@@ -116,6 +116,7 @@
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
+      debugger;
       return false; // fixme
     },
 
