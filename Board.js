@@ -82,12 +82,37 @@
       },false,this);
     },
 
+    columns: function(input){
+      var matrix = this.rows();
+      var result = _(matrix).map(function(row){
+        return row[input];
+      },this);
+      return result;
+    },
+
     hasColConflictAt: function(colIndex){
-      return false; // fixme
+      var col = this.columns(colIndex);
+      var result;
+      var counter = 0;
+      _.each(col, function(value){
+        if(value == 1){
+          counter++;
+        }
+        if(counter > 1){
+          result = true;
+        } else{
+          result = false;
+        }
+      });
+      return result;
     },
 
     hasAnyColConflicts: function(){
-      return false; // fixme
+      var totalcols =_.range(this.get("n"));
+      return _.reduce(totalcols, function(memo, col){
+        memo = memo || this.hasColConflictAt(col);
+        return memo;
+      },false,this);
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
