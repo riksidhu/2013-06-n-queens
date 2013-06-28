@@ -49,14 +49,19 @@ window.countNQueensSolutions = function(n){
   //_.each(matrix, function(rows){
   var firstRow = matrix[0];
     var walkMatrix = function(firstRow){
-        for( var i = 0; i < n; i++){
+        for(var i = 0; i < n; i++){
           board.togglePiece(firstRow, i);//toggle on
-              if(this.hasAnyQueenConflictsOn(rowIndex,i)){
-                board.togglePiece(firstRow,i);//toggle off
-                walkMatrix(firstRow+1);
-              } else {
-                walkMatrix(firstRow +1);
-              }
+              if(!this.hasAnyQueenConflictsOn(firstRow,i)){
+                if(firstRow +1 < n){
+                  walkMatrix(firstRow+1);
+                } else{
+                  solutionCount++;
+                }
+              //   board.togglePiece(firstRow,i);//toggle off
+              // } else {
+              //   walkMatrix(firstRow +1);
+          }
+          board.toggle(firstRow,i);
         }
     };
   //});
