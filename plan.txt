@@ -1,0 +1,20 @@
+1)Make a new matrix
+
+2)(toggle on) first queen first row at index 0 (do test)
+
+3)(toggle on) 2nd queen in the row + 1 at index 0 - (do test)
+  3a) Test for collisions is true
+    3aa)(toggle off) current row value, then increment row index by one (toggle on)(do test)
+  3b) Test for collisions is false (take current location and toggle on, proceed to next step
+4)(toggle on) 3rd queen in the row + 1 at index 0 - (do test)
+  4a)Test for collisions is true.
+    4aa)(toggle off) current row value, then increment row index by one (toggle on)(do test)
+  4b) Test for collisions is false
+
+
+
+If collisions returns true for each index in current row go to parent and (toggle off) current index, then increment that index by 1 (do test)
+
+If solution is found save the configuration
+
+If the first row queen increments to index plus one, end 
