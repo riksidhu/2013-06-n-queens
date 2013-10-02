@@ -45,44 +45,47 @@ window.countNRooksSolutions = function(n){
   return solutionCount;
 };
 
-window.findNQueensSolution = function(n){
-  var solution = undefined; //fixme
+// N-queens solution
+var nQueens = function(n, solutionCount, row, columnCollisions, majorDiaCollisions, minorDiaCollisions){
+  columnCollisions = columnCollisions || {};
+  majorDiaCollisions = majorDiaCollisions || {};
+  minorDiaCollisions = minorDiaCollisions || {};
+  row = row || 0;
+  solutionCount = solutionCount || 0;
 
-  console.log('Single solution for ' + n + ' queens:', solution);
-  return solution;
-};
-
-window.countNQueensSolutions = function(n){
-  debugger;
-
-  var matrix = makeEmptyMatrix(n);
-  var solutionCount = 0;
-    for(var i = 0; i < n; i++){
-
-
+  for(var i = 0; i < n; i++) {
+    if (row < n) {
+      // if there are no conflicts...
+      if (columnCollisions[i] !== true || columnCollisions[i] === undefined) {
+        if (majorDiaCollisions[i - row] !== true || majorDiaCollisions[i - row] === undefined) {
+          if (minorDiaCollisions[i + row] !== true || minorDiaCollisions[i + row] === undefined) {
+            columnCollisions[i] = true;
+            majorDiaCollisions[i - row] = true;
+            minorDiaCollisions[i + row] = true;
+            // do a deep copy of each object
+            var cloneColumnCollisions = deepCopy(columnCollisions);
+            var cloneMajorDiaCollisions = deepCopy(majorDiaCollisions);
+            var cloneMinorDiaCollisions = deepCopy(minorDiaCollisions);
+            nQueens(n, solutionCount, row + 1, cloneColumnCollisions, cloneMajorDiaCollisions, cloneMinorDiaCollisions);
+          }
+        }
+      }
+    } else {
+      solutionCount += 1;
     }
-
-    // var walkMatrix = function(firstRow){
-    //     for(var i = 0; i < n; i++){
-    //       board.togglePiece(firstRow, i);//toggle on
-    //           if(!this.hasAnyQueenConflictsOn(firstRow,i)){
-    //             if(firstRow +1 < n){
-    //               walkMatrix(firstRow+1);
-    //             } else{
-    //               solutionCount++;
-    //             }
-    //           //   board.togglePiece(firstRow,i);//toggle off
-    //           // } else {
-    //           //   walkMatrix(firstRow +1);
-    //       }
-    //       board.toggle(firstRow,i);
-    //     }
-    // };
-
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  }
   return solutionCount;
 };
 
+var deepCopy = function(obj) {
+  var clone = {};
+  for (var key in obj) {
+    clone[key] = obj[key];
+  }
+  return clone;
+};
+
+console.log(nQueens(4));
 
 // This function uses a board visualizer lets you view an interactive version of any piece matrix.
 
